@@ -1,64 +1,44 @@
 # Azure-AD-Sign-in-and-out
 
-Azure AD B2C is another service built on the same technology but not the same in functionality as Azure AD. Azure AD B2C target is to build a directory for consumer applications where users can register with e-mail ID or social providers like Google, FB, MSA, known as Federation Gateway. The goal for Azure AD B2C is to allow organizations to manage single directory of customer identities shared among all applications i.e. single sign-on.
+## Enable self-service sign-up for your tenant
 
-Azure AD B2C is not targeted at organisation users but consumers.
+Before you can add a self-service sign-up user flow to your applications, you need to enable the feature for your tenant. After it's enabled, controls become available in the user flow that let you associate the user flow with an application.
 
-Pricing update: There is pricing update which affects Azure AD B2C and External Identities.
+1. Sign in to the Azure portal as an Azure AD administrator.
+2. Under Azure services, select Azure Active Directory.
+3. Select User settings, and then under External users, select Manage external collaboration settings.
+4. Set the Enable guest self-service sign up via user flows toggle to Yes.
 
-First - price is per monthly, active user (MAU). MAU means someone logged on at least once during the billing period (month).
-Second - first 50k users in Azure AD B2C or external identities are Free. So first 50k users in a month, free - next are paid, so 60k active users within a month costs something like 16USD.
+## Create the user flow for self-service sign-up
 
+Next, you'll create the user flow for self-service sign-up and add it to an application.
 
-This sample article uses a sample Node.js application to show how to add Azure Active Directory B2C (Azure AD B2C) authentication to a Node.js web application. The sample application enables users to sign in, sign out, update profile and reset password using Azure AD B2C user flows. The sample web application uses Microsoft Authentication Library (MSAL) for Node to handle authentication and authorization.
-
-## Step 1 : Configure your user flows
-
-[add-sign-up-and-sign-in-policy](https://learn.microsoft.com/en-gb/azure/active-directory-b2c/add-sign-up-and-sign-in-policy?pivots=b2c-user-flow).
-
-
-## Step 2 : Register a web application
-
-To enable your application sign in with Azure AD B2C, register your app in the Azure AD B2C directory. The app registration establishes a trust relationship between the app and Azure AD B2C.
-
-During app registration, you'll specify the Redirect URI. The redirect URI is the endpoint to which the user is redirected by Azure AD B2C after they authenticate with Azure AD B2C. The app registration process generates an Application ID, also known as the client ID, that uniquely identifies your app. After your app is registered, Azure AD B2C uses both the application ID, and the redirect URI to create authentication requests.
-
-### Step 2.1 : Register the app
-
-* *Supported account types : select Accounts in any identity provider or organizational directory (for authenticating users with user flows)*
-* *Redirect URI :  http://localhost:3000/redirect*
-* *Permissions : select the Grant admin consent to openid and offline_access permissions checkbox*
-
-### Step 2.2 : Create a web app client secret
-
-Create a client secret for the registered web application. The web application uses the client secret to prove its identity when it requests tokens.
-
-* Under Manage, select Certificates & secrets.
-* Select New client secret.
-* In the Description box, enter a description for the client secret (for example, clientsecret1).
-* Under Expires, select a duration for which the secret is valid, and then select Add.
-* Record the secret's Value. You'll use this value for configuration in a later step.
+1. Sign in to the Azure portal as an Azure AD administrator.
+2. Under Azure services, select Azure Active Directory.
+3. In the left menu, select External Identities.
+4. Select User flows, and then select New user flow.
 
 
-## Step 3 : Update .env file
+## Select the layout of the attribute collection form
 
-Open your web app in a code editor such as Visual Studio Code. Under the project root folder, open the .env file. This file contains information about your Azure AD B2C identity provider.
+You can choose order in which the attributes are displayed on the sign-up page.
 
-## Build Docker image (Optional)
-
-```bash
-docker build -t akhilrajmailbox/azure-ad-example:1.0.0 .
-```
-
-## Run the sample web app
-
-```bash
-docker run -d -p 3000:3000 -v /Users/akhilraj/Documents/sources/Mine/.env:/opt/webapp-example/.env:ro --name azure-ad-example --hostname azure-ad-example akhilrajmailbox/azure-ad-example:1.0.0
-```
+1. In the Azure portal, select Azure Active Directory.
+2. Select External Identities, select User flows.
+3. Select the self-service sign-up user flow from the list.
+4. Under Customize, select Page layouts.
+5. The attributes you chose to collect are listed. To change the order of display, select an attribute, and then select Move up, Move down, Move to the top, or Move to the bottom.
+6. Select Save.
 
 
-## reference
+## Reference
 
-[configure-a-sample-node-web-app](https://learn.microsoft.com/en-gb/azure/active-directory-b2c/configure-a-sample-node-web-app)
+[web-applications](https://learn.microsoft.com/en-us/azure/active-directory/develop/sample-v2-code#web-applications)
 
-[youtube](https://www.youtube.com/watch?v=M23P7tj_bXA)
+[external-identities](https://learn.microsoft.com/en-us/azure/active-directory/external-identities/what-is-b2b)
+
+[enable-self-service-sign-up-for-your-tenant](https://learn.microsoft.com/en-gb/azure/active-directory/external-identities/self-service-sign-up-user-flow#enable-self-service-sign-up-for-your-tenant)
+
+[self-service-sign-up-overview](https://learn.microsoft.com/en-gb/azure/active-directory/external-identities/self-service-sign-up-overview)
+
+[self-service-sign-up-user-flow](https://learn.microsoft.com/en-gb/azure/active-directory/external-identities/self-service-sign-up-user-flow)
